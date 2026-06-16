@@ -34,7 +34,7 @@
  *
  * 受け付ける形式:
  *   - 'YYYY-MM-DD' (ISO8601 形式、SoT §3-5 バリデーション正規表現)
- *   - 'YYYY/MM/DD' (旧来の日本式スラッシュ区切り、import_supabase.py:43 互換)
+ *   - 'YYYY/MM/DD' (旧来の日本式スラッシュ区切り)
  *   - Date オブジェクト (そのまま返す)
  *
  * 既存 `parseDate` (utils.js:12) は YYYY/MM/DD のみ受け付け、かつ `d.setHours(0,0,0,0)` で

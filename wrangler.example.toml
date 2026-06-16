@@ -1,0 +1,11 @@
+# Optional Cloudflare Pages local/declarative config.
+# Copy to wrangler.toml only after replacing database_id.
+
+name = "amyutama"
+pages_build_output_dir = "."
+compatibility_date = "2026-06-17"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "amyutama-prod"
+database_id = "replace_with_cloudflare_d1_database_id"

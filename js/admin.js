@@ -548,7 +548,7 @@ function _saveMvData() {
   a.href = url; a.download = 'music.json'; a.click();
   URL.revokeObjectURL(url);
   const status = $('#mv-status');
-  if (status) status.textContent = 'music.json をダウンロードしました。docs/data/ に上書きしてコミットしてください。';
+  if (status) status.textContent = 'music.json をダウンロードしました。data/ に上書きしてコミットしてください。';
   _renderMvList();
 }
 

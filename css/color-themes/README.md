@@ -5,7 +5,7 @@
 使い方:
 
 1. 使いたいテーマCSSを選ぶ
-2. [docs/index.html](../../index.html) の `css/theme.css` の直後に読み込む
+2. [index.html](../../index.html) の `css/theme.css` の直後に読み込む
 
 ```html
 <link rel="stylesheet" href="css/theme.css">

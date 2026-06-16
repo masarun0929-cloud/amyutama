@@ -1,0 +1,8 @@
+{
+  "name": "usatama-amyu-songlist",
+  "private": true,
+  "scripts": {
+    "generate:static": "node tools/generate_static_data.mjs",
+    "check": "node --check tools/generate_static_data.mjs && node --check functions/api/data.js && node --check \"functions/api/admin/[[path]].js\""
+  }
+}

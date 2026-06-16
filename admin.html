@@ -46,7 +46,7 @@
       <span class="badge accent">D1更新</span>
     </div>
     <div class="admin-form-grid">
-      <label>管理トークン<input id="admin-token" type="password" autocomplete="current-password" placeholder="ADMIN_TOKENを設定した場合だけ入力"></label>
+      <label>管理トークン<input id="admin-token" type="password" autocomplete="current-password" placeholder="Cloudflare PagesのADMIN_TOKEN"></label>
       <label>チャンネル<select id="channel"></select></label>
       <label>配信日<input id="streamed-on" type="date"></label>
       <label>枠番号<input id="source-index" type="number" min="1" placeholder="空なら自動採番"></label>
@@ -86,7 +86,7 @@
       <h2>静的データ生成</h2>
       <span class="badge" id="static-badge">GitHub Actions</span>
     </div>
-    <p class="admin-note">D1の現在の内容から <code>docs/data/*.json</code> を生成するGitHub Actionsを起動します。完了後、GitHubへのcommitとCloudflare Pagesの再デプロイが自動で進みます。</p>
+    <p class="admin-note">D1の現在の内容から <code>data/*.json</code> を生成するGitHub Actionsを起動します。完了後、GitHubへのcommitとCloudflare Pagesの再デプロイが自動で進みます。</p>
     <div class="admin-actions">
       <button class="btn primary" id="generate-static-data" type="button">静的データ生成を開始</button>
     </div>
@@ -178,16 +178,15 @@
       <h2>更新手順</h2>
     </div>
     <ol class="admin-steps">
-      <li>ローカル管理画面またはD1 Consoleで歌枠データを更新する。</li>
-      <li>管理画面の「静的JSONを生成」で <code>docs/data/*.json</code> を更新する。</li>
+      <li>この公開管理画面またはD1 Consoleで歌枠データを更新する。</li>
+      <li>管理画面の「静的JSONを生成」で <code>data/*.json</code> を更新する。</li>
       <li>変更をGitへcommit/pushしてCloudflare Pagesへ反映する。</li>
       <li>反映後、このページで件数と最新日付を確認する。</li>
     </ol>
     <div class="command-grid">
       <div>
         <h3>管理画面</h3>
-        <pre><code>node admin-server\server.js
-tailscale serve http://127.0.0.1:8788</code></pre>
+        <pre><code>https://your-pages-domain/admin.html</code></pre>
       </div>
       <div>
         <h3>Spreadsheet移行時</h3>
@@ -196,7 +195,7 @@ $env:SONGLIST_NEW_LIST_GID="0"
 $env:SONGLIST_NEW_SETLIST_GID="123456789"</code></pre>
       </div>
     </div>
-    <p class="admin-note">Cloudflare API token、ADMIN_TOKEN、Supabase secret keyはこのページやGitHubには保存しません。</p>
+    <p class="admin-note">Cloudflare API token、ADMIN_TOKEN、GitHub tokenはこのページやGitHubには保存しません。</p>
   </section>
 </main>
 

@@ -1,5 +1,5 @@
 // Single-channel template with both listener mode and singer mode.
-// To use it, copy this file over docs/js/config.js, then edit the placeholder values.
+// To use it, copy this file over js/config.js, then edit the placeholder values.
 export const SITE = {
   creatorName: 'replace_with_vtuber_name',
   databaseName: '歌唱データベース',

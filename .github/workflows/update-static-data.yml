@@ -1,0 +1,33 @@
+name: Update static data from D1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-static-data:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+      ORIGINAL_GENRE_KEYWORDS: 兎彷魂あみゅ,usatama amyu,あみゅ
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate static JSON
+        run: node tools/generate_static_data.mjs
+
+      - name: Commit generated data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update static song data"
+          file_pattern: "data/meta.json data/songs.json data/streams.json"
