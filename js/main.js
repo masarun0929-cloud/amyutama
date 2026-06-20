@@ -3116,7 +3116,7 @@ function updatePageTitle(mode) {
   const el = document.getElementById('page-title');
   if (!el) return;
 
-  el.innerHTML = '<img class="hero-title-icon" src="assets/site-icon.svg" alt="" width="32" height="32" fetchpriority="high" decoding="sync">兎彷魂あみゅ 歌唱データベース';
+  el.innerHTML = '<img class="hero-title-icon" src="assets/site-icon.png" alt="" width="32" height="32" fetchpriority="high" decoding="sync">兎彷魂あみゅ 歌唱データベース';
   document.title = '兎彷魂あみゅ 歌唱データベース';
 
   // ヒーロー背景ウォーターマーク切替

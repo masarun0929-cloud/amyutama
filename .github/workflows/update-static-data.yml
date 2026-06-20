@@ -2,6 +2,14 @@ name: Update static data from D1
 
 on:
   workflow_dispatch:
+    inputs:
+      source:
+        description: Dispatch source
+        required: false
+        default: cloudflare-admin
+      requested_at:
+        description: Request timestamp
+        required: false
 
 permissions:
   contents: write
