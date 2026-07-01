@@ -249,24 +249,24 @@
   transition: transform 0.1s ease, outline 0.1s ease;
   cursor: default;
 }
-.heatmap-cell.l1 { background: #f0c6d8; }
-.heatmap-cell.l2 { background: #d978a4; }
-.heatmap-cell.l3 { background: #b95582; }
-.heatmap-cell.l4 { background: #9f3f6d; }
+.heatmap-cell.l1 { background: #ddd4f0; }
+.heatmap-cell.l2 { background: #a07cd8; }
+.heatmap-cell.l3 { background: #7850b8; }
+.heatmap-cell.l4 { background: #5e38a0; }
 :root[data-theme="dark"] .heatmap-cell,
-:root[data-theme="auto"] .heatmap-cell { background: #2a2029; }
+:root[data-theme="auto"] .heatmap-cell { background: #231840; }
 :root[data-theme="dark"] .heatmap-cell.l1,
-:root[data-theme="auto"] .heatmap-cell.l1 { background: #563246; }
+:root[data-theme="auto"] .heatmap-cell.l1 { background: #4a3068; }
 :root[data-theme="dark"] .heatmap-cell.l2,
-:root[data-theme="auto"] .heatmap-cell.l2 { background: #9f3f6d; }
+:root[data-theme="auto"] .heatmap-cell.l2 { background: #6040a0; }
 :root[data-theme="dark"] .heatmap-cell.l3,
-:root[data-theme="auto"] .heatmap-cell.l3 { background: #d978a4; }
+:root[data-theme="auto"] .heatmap-cell.l3 { background: #a080d8; }
 :root[data-theme="dark"] .heatmap-cell.l4,
-:root[data-theme="auto"] .heatmap-cell.l4 { background: #9f3f6d; }
+:root[data-theme="auto"] .heatmap-cell.l4 { background: #6040a0; }
 
 @media (prefers-color-scheme: dark) {
-  :root[data-theme="auto"] .heatmap-cell { background: #2a2029; }
-  :root[data-theme="auto"] .heatmap-cell.l1 { background: #563246; }
+  :root[data-theme="auto"] .heatmap-cell { background: #231840; }
+  :root[data-theme="auto"] .heatmap-cell.l1 { background: #4a3068; }
 }
 
 .heatmap-cell:hover { transform: scale(1.5); outline: 2px solid var(--ink); }
@@ -669,7 +669,7 @@ body[data-audience="listener"] [data-mobile-panel-toggle="setlist"] {
   line-height: 1;
   opacity: 0.6;
   border-radius: 999px;
-  background: rgba(217, 120, 164, 0.08);
+  background: rgba(136, 88, 200, 0.08);
 }
 .setlist-planner .setlist-drag-handle:hover {
   opacity: 1;
@@ -956,9 +956,9 @@ body[data-audience="listener"] [data-mobile-panel-toggle="setlist"] {
   max-width: 100%;
 }
 .setlist-add-btn {
-  --setlist-add-bg: #f7dce8;
-  --setlist-add-border: #d978a4;
-  --setlist-add-text: #9f3f6d;
+  --setlist-add-bg: #ecdff8;
+  --setlist-add-border: #8858c8;
+  --setlist-add-text: #5e38a0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1520,7 +1520,7 @@ body[data-audience="listener"] [data-mobile-panel-toggle="setlist"] {
   background: var(--primary-strong);
   color: #fff;
   border: 1px solid color-mix(in srgb, var(--primary-strong) 78%, #4c2437 22%);
-  box-shadow: 0 3px 10px rgba(159, 63, 109, 0.24);
+  box-shadow: 0 3px 10px rgba(94, 56, 160, 0.24);
   font-size: 11px;
   font-weight: 900;
   font-feature-settings: var(--tnum);
