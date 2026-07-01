@@ -100,25 +100,55 @@ function renderPreview(rows) {
   `;
 }
 
+let _mergeSrcId = null;
+
 function renderSongMeta(rows) {
+  _mergeSrcId = null;
   $('#song-meta-box').innerHTML = `
     <div class="admin-table-wrap">
       <table class="admin-table">
-        <thead><tr><th>曲</th><th>歌手</th><th>キー</th><th>ジャンル</th><th></th></tr></thead>
+        <thead><tr><th>ID</th><th>曲</th><th>歌手</th><th>キー</th><th>ジャンル</th><th></th></tr></thead>
         <tbody>
           ${rows.map((row) => `
             <tr data-song-id="${row.id}">
+              <td style="font-size:11px;color:var(--ink-mute);white-space:nowrap">${row.id}</td>
               <td><input class="admin-compact-input" data-field="title" value="${escapeHtml(row.title || '')}"></td>
               <td><input class="admin-compact-input" data-field="artist" value="${escapeHtml(row.artist || '')}"></td>
               <td><input class="admin-compact-input" data-field="displayKey" value="${escapeHtml(row.display_key || '')}"></td>
               <td><input class="admin-compact-input" data-field="genre" value="${escapeHtml(row.genre || '')}"></td>
-              <td><button class="btn ghost" type="button" data-save-meta>保存</button></td>
+              <td style="white-space:nowrap">
+                <button class="btn ghost" type="button" data-save-meta>保存</button>
+                <button class="btn ghost" type="button" data-merge-btn style="margin-left:4px;font-size:11px">マージ元</button>
+              </td>
             </tr>
           `).join('')}
         </tbody>
       </table>
     </div>
   `;
+}
+
+function updateMergeBtnState() {
+  const box = $('#song-meta-box');
+  if (!box) return;
+  box.querySelectorAll('tr[data-song-id]').forEach((row) => {
+    const id = Number(row.dataset.songId);
+    const btn = row.querySelector('[data-merge-btn]');
+    if (!btn) return;
+    if (_mergeSrcId === null) {
+      btn.textContent = 'マージ元';
+      btn.style.opacity = '';
+      row.style.outline = '';
+    } else if (id === _mergeSrcId) {
+      btn.textContent = '解除';
+      btn.style.opacity = '1';
+      row.style.outline = '2px solid var(--primary)';
+    } else {
+      btn.textContent = 'ここに統合';
+      btn.style.opacity = '1';
+      row.style.outline = '';
+    }
+  });
 }
 
 function renderSync(data, elapsed) {
@@ -265,21 +295,49 @@ function initManagement() {
   });
 
   $('#song-meta-box')?.addEventListener('click', async (event) => {
-    const button = event.target.closest('[data-save-meta]');
-    if (!button) return;
-    const row = button.closest('[data-song-id]');
-    $('#meta-status').textContent = '保存中...';
-    try {
-      await adminApi('songs/metadata', {
-        songId: row.dataset.songId,
-        title: row.querySelector('[data-field="title"]').value,
-        artist: row.querySelector('[data-field="artist"]').value,
-        displayKey: row.querySelector('[data-field="displayKey"]').value,
-        genre: row.querySelector('[data-field="genre"]').value,
-      });
-      $('#meta-status').textContent = '保存しました。必要なら静的データ生成を開始してください。';
-    } catch (error) {
-      $('#meta-status').textContent = error.message || String(error);
+    const saveBtn = event.target.closest('[data-save-meta]');
+    if (saveBtn) {
+      const row = saveBtn.closest('[data-song-id]');
+      $('#meta-status').textContent = '保存中...';
+      try {
+        await adminApi('songs/metadata', {
+          songId: row.dataset.songId,
+          title: row.querySelector('[data-field="title"]').value,
+          artist: row.querySelector('[data-field="artist"]').value,
+          displayKey: row.querySelector('[data-field="displayKey"]').value,
+          genre: row.querySelector('[data-field="genre"]').value,
+        });
+        $('#meta-status').textContent = '保存しました。必要なら静的データ生成を開始してください。';
+      } catch (error) {
+        $('#meta-status').textContent = error.message || String(error);
+      }
+      return;
+    }
+
+    const mergeBtn = event.target.closest('[data-merge-btn]');
+    if (!mergeBtn) return;
+    const row = mergeBtn.closest('[data-song-id]');
+    const id = Number(row.dataset.songId);
+
+    if (_mergeSrcId === null) {
+      _mergeSrcId = id;
+      updateMergeBtnState();
+    } else if (id === _mergeSrcId) {
+      _mergeSrcId = null;
+      updateMergeBtnState();
+    } else {
+      const srcTitle = $('#song-meta-box').querySelector(`[data-song-id="${_mergeSrcId}"] [data-field="title"]`)?.value || String(_mergeSrcId);
+      const keepTitle = row.querySelector('[data-field="title"]')?.value || String(id);
+      if (!confirm(`「${srcTitle}」(ID:${_mergeSrcId}) を「${keepTitle}」(ID:${id}) に統合します。\n統合元のレコードは削除されます。よろしいですか？`)) return;
+      $('#meta-status').textContent = '統合中...';
+      try {
+        const data = await adminApi('songs/merge', { keepId: id, mergeId: _mergeSrcId });
+        $('#meta-status').textContent = `統合しました。削除: ID=${data.deleted.id}「${data.deleted.title}」/ 歌枠参照更新: ${data.streamSongsUpdated}件。必要なら静的データ生成を開始してください。`;
+        const result = await adminApi(`songs/search?q=${encodeURIComponent($('#song-query').value)}`);
+        renderSongMeta(result.songs);
+      } catch (error) {
+        $('#meta-status').textContent = error.message || String(error);
+      }
     }
   });
 

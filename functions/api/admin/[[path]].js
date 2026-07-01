@@ -361,6 +361,50 @@ async function saveSongMetadata(env, input) {
   return { ok: true };
 }
 
+async function mergeSongs(env, input) {
+  const keepId = Number(input.keepId);
+  const mergeId = Number(input.mergeId);
+  if (!keepId || !mergeId) throw new Error('keepId と mergeId は必須です');
+  if (keepId === mergeId) throw new Error('keepId と mergeId が同じです');
+
+  const kept = await selectOne(env, `
+    SELECT songs.id, songs.title, songs.song_key, songs.normalized_title, artists.name AS artist
+    FROM songs LEFT JOIN artists ON artists.id = songs.artist_id WHERE songs.id = ?
+  `, [keepId]);
+  const merged = await selectOne(env, `
+    SELECT songs.id, songs.title, artists.name AS artist
+    FROM songs LEFT JOIN artists ON artists.id = songs.artist_id WHERE songs.id = ?
+  `, [mergeId]);
+  if (!kept) throw new Error(`song id=${keepId} が見つかりません`);
+  if (!merged) throw new Error(`song id=${mergeId} が見つかりません`);
+
+  const streamResult = await execute(env, 'UPDATE stream_songs SET song_id = ? WHERE song_id = ?', [keepId, mergeId]);
+
+  await execute(env, `
+    INSERT INTO song_channel_stats (song_id, channel_id, sing_count, source_index, created_at, updated_at)
+    SELECT ?, channel_id, sing_count, source_index, created_at, ?
+    FROM song_channel_stats WHERE song_id = ?
+    ON CONFLICT(song_id, channel_id) DO UPDATE SET
+      sing_count = song_channel_stats.sing_count + excluded.sing_count,
+      updated_at = excluded.updated_at
+  `, [keepId, todayIso(), mergeId]);
+
+  await execute(env, 'DELETE FROM song_channel_stats WHERE song_id = ?', [mergeId]);
+  await execute(env, 'DELETE FROM songs WHERE id = ?', [mergeId]);
+
+  const fixedKey = songKey(kept.title, kept.artist || '');
+  const fixedNormTitle = normalizedKey(kept.title);
+  await execute(env, 'UPDATE songs SET song_key = ?, normalized_title = ? WHERE id = ?', [fixedKey, fixedNormTitle, keepId]);
+
+  return {
+    ok: true,
+    kept: { id: keepId, title: kept.title, artist: kept.artist },
+    deleted: { id: mergeId, title: merged.title, artist: merged.artist },
+    streamSongsUpdated: streamResult.changes || 0,
+    fixedKey,
+  };
+}
+
 function pickColumn(columns, candidates) {
   const normalized = columns.map((name) => ({ name, key: normalizedKey(name).replace(/[\s_-]/g, '') }));
   for (const candidate of candidates) {
@@ -474,6 +518,7 @@ async function route(request, env, path) {
   if (request.method === 'POST' && path === 'preview-stream') return { songs: await previewStream(env, await readJson(request)) };
   if (request.method === 'POST' && path === 'streams') return addStream(env, await readJson(request));
   if (request.method === 'POST' && path === 'songs/metadata') return saveSongMetadata(env, await readJson(request));
+  if (request.method === 'POST' && path === 'songs/merge') return mergeSongs(env, await readJson(request));
   if (request.method === 'POST' && path === 'key-reference/import-csv') return importKeyReferenceCsv(env, await readJson(request));
   if (request.method === 'POST' && path === 'key-reference/sync-url') return syncKeyReferenceUrl(env, await readJson(request));
   if (request.method === 'POST' && path === 'static-data/generate') return triggerStaticDataWorkflow(env);
