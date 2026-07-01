@@ -386,17 +386,11 @@ function initMobileTabNav() {
 function initPageTopToast() {
   const button = $('#page-top-toast');
   if (!button) return;
-  const image = button.querySelector('img[data-src]');
   let ticking = false;
   const threshold = 420;
-  const loadImage = () => {
-    if (!image || image.src) return;
-    image.src = image.dataset.src || '';
-  };
   const update = () => {
     ticking = false;
     const visible = window.scrollY > threshold;
-    if (visible) loadImage();
     button.hidden = !visible;
     button.classList.toggle('is-visible', visible);
     button.setAttribute('aria-hidden', String(!visible));
@@ -411,7 +405,7 @@ function initPageTopToast() {
   button.setAttribute('aria-hidden', 'true');
   button.tabIndex = -1;
   button.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   });
   window.addEventListener('scroll', requestUpdate, { passive: true });
   update();
