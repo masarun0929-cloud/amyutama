@@ -338,11 +338,26 @@ async function searchSongs(env, query) {
 async function saveSongMetadata(env, input) {
   const songId = Number(input.songId);
   if (!songId) throw new Error('songId is required');
-  await execute(env, 'UPDATE songs SET display_key = ?, genre = ? WHERE id = ?', [
-    normalize(input.displayKey),
-    normalize(input.genre),
-    songId,
-  ]);
+  const title = normalize(input.title || '');
+  const displayKey = normalize(input.displayKey || '');
+  const genre = normalize(input.genre || '');
+  if (title) {
+    const artist = normalize(input.artist || '');
+    const artistId = await upsertArtist(env, artist);
+    const key = songKey(title, artist);
+    await execute(env, `
+      UPDATE songs
+      SET title = ?, normalized_title = ?, song_key = ?, artist_id = ?,
+          display_key = ?, genre = ?
+      WHERE id = ?
+    `, [title, normalizedKey(title), key, artistId, displayKey, genre, songId]);
+  } else {
+    await execute(env, 'UPDATE songs SET display_key = ?, genre = ? WHERE id = ?', [
+      displayKey,
+      genre,
+      songId,
+    ]);
+  }
   return { ok: true };
 }
 
