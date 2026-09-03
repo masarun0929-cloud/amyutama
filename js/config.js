@@ -29,7 +29,7 @@ export const CHANNELS = {
     listGid: '0',
     setlistGid: 'replace_with_main_setlist_gid',
     handle: '@UsatamaAmyu',
-    avatarUrl: 'https://yt3.googleusercontent.com/b0rVCCmVeicf7JzhRDOA0b2caXDPCqnd1bUgckRxionTfW-fJypjSlIg-gxW5znUWXR-gPLSrQ=s900-c-k-c0x00ffffff-no-rj',
+    avatarUrl: 'https://yt3.googleusercontent.com/dDbKVfyPuUZLGwu_fpNbpIwnR9ErY0r20zxnozs6qhVgt-lEg7h6z9VR-qVPZu93_8GHWKBv1Nk=s160-c-k-c0x00ffffff-no-rj',
     bannerUrl: 'https://yt3.googleusercontent.com/CKzrgOqQkkBg4cSNCZYkcrtyuV_mXNifssFvQeyUMWWDt6fDDNn2Gi0wNb6suQ2AvyjBpCinBQ=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj',
     intro: "🐰♡┈┈┈┈┈┈┈┈┈┈┈┈♡🐰\n\nアンゴラ兎のさみしがりや、死神アイドルVtuber\n兎彷魂あみゅ(usatama amyu)だぞ〜❣️\n君の魂、永遠にあみゅの物にしてあげる…💕\n\n🐰リンク一覧💗\n\n♡Twitter♡最新情報をお届け♡\nhttps://twitter.com/usatama_amyu\n\n♡FANBOX♡もっとあみゅと依存しあいたい子向け♡\nhttps://usatama-amyu.fanbox.cc/\n\n♡BOOTH♡限定グッズをお届け♡\nhttps://usatama-amyu.booth.pm/\n\n♡TikTok♡\nhttps://www.tiktok.com/@usatamaamyu\n\n♡lit.link♡\nhttps://lit.link/usatamaamyu\n\n🐰タグ一覧💗\n\n♡総合　#兎彷魂あみゅ\n♡配信　#あみゅライブ\n♡FA　#あみゅ～じあむ\n♡FN　あみゅれっ兎\n♡FM　🤍🐰💗\n♡切り抜き　#あみゅミニライブ\n\n2023.06.02 デビュー\n2023.06.10 収益化＆メンバーシップ解禁\n2023.07.01 チャンネル登録1万人達成\n2023.09.26 チャンネル登録2万人達成\n2023.11.28 チャンネル登録3万人達成\n2024.02.13 チャンネル登録4万人達成",
   },
