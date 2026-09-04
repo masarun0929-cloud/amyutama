@@ -3172,7 +3172,7 @@ https://lit.link/usatamaamyu
       { icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.7 2h3.25a5.6 5.6 0 0 0 3.88 3.78v3.28a8.8 8.8 0 0 1-3.78-.86v6.85A6.95 6.95 0 1 1 10.1 8.1v3.5a3.47 3.47 0 1 0 3.6 3.45V2Z"/></svg>', label: 'TikTok', url: 'https://www.tiktok.com/@usatamaamyu' },
       { icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>', label: 'lit.link', url: 'https://lit.link/usatamaamyu' },
     ],
-    avatarUrl: 'https://yt3.googleusercontent.com/b0rVCCmVeicf7JzhRDOA0b2caXDPCqnd1bUgckRxionTfW-fJypjSlIg-gxW5znUWXR-gPLSrQ=s900-c-k-c0x00ffffff-no-rj',
+    avatarUrl: 'https://yt3.googleusercontent.com/dDbKVfyPuUZLGwu_fpNbpIwnR9ErY0r20zxnozs6qhVgt-lEg7h6z9VR-qVPZu93_8GHWKBv1Nk=s160-c-k-c0x00ffffff-no-rj',
     bannerUrl: 'https://yt3.googleusercontent.com/CKzrgOqQkkBg4cSNCZYkcrtyuV_mXNifssFvQeyUMWWDt6fDDNn2Gi0wNb6suQ2AvyjBpCinBQ=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj',
   },
 };
